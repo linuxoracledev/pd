@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PaymentAPI.DbConTexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,16 +10,22 @@ var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Database Connection
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseOracle(
-        builder.Configuration.GetConnectionString("connect-to-oracle")
-        );
+    options.UseOracle(builder.Configuration.GetConnectionString("connect-to-oracle"));
 });
+
+//JWT Athentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        { ValidateIssuer = true };
+    });
 
 //2 Enable CORS
 builder.Services.AddCors(options =>
