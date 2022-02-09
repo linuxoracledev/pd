@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PaymentAPI.DbConTexts;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 //1 For Cors
@@ -24,7 +25,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
-        { ValidateIssuer = true };
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+        };
     });
 
 //2 Enable CORS
@@ -49,7 +59,9 @@ if (app.Environment.IsDevelopment())
 }
 //3 CORS
 app.UseCors(myAllowSpecificOrigins);
+
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

@@ -542,3 +542,4 @@ E:\DotNet\DigitalPaymentSolutions\PaymentAPI\obj\Debug\net6.0\PaymentAPI.dll
 E:\DotNet\DigitalPaymentSolutions\PaymentAPI\obj\Debug\net6.0\ref\PaymentAPI.dll
 E:\DotNet\DigitalPaymentSolutions\PaymentAPI\obj\Debug\net6.0\PaymentAPI.pdb
 E:\DotNet\DigitalPaymentSolutions\PaymentAPI\obj\Debug\net6.0\PaymentAPI.genruntimeconfig.cache
+F:\Webdev\.Net\DigitalPaymentSolutions\PaymentAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
